@@ -1,0 +1,16 @@
+Primitive JS Data Types
+
+Number: Floating point numbers, for decimals and integers
+
+String: Sequence of characters, used for text
+
+Boolean: Logical data type that can ony be true or false
+
+Undefined: Data type of a variable that does not have a value yet (non-existent)
+
+Null: Also means non-existent
+
+
+...
+
+Type coercion: JS automatically converts data types in order to join strings
