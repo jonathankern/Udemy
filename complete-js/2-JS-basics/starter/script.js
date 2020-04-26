@@ -328,3 +328,332 @@ if (johnTeamAverage > mikeTeamAverage && johnTeamAverage > maryTeamAverage) {
     console.log('There is not a clear winner but 2 teams tied.');
 }
 */
+
+
+/**********************************
+Functions
+**********************************/
+
+/*
+function calculateAge(birthYear) {
+    // return results so you can use the value later
+    return 2018 - birthYear;
+}
+
+// create var to store result of return
+var ageJohn = calculateAge(1990);
+var ageMike = calculateAge(1948);
+var ageJane = calculateAge(1969);
+console.log(ageJohn, ageMike, ageJane);
+
+
+// calculate how many years until retirement
+function yearsUntilRetirement(year, firstName) {
+    var age = calculateAge(year);
+    var retirement = 65 - age;
+
+    if (retirement > 0) {
+        console.log(firstName + ' retires in ' + retirement + ' years.');
+    } else {
+        console.log(firstName + ' is already retired.');
+    }
+}
+
+// nothing to return so don't need to store value in variable
+yearsUntilRetirement(1990, 'John');
+yearsUntilRetirement(1948, 'Mike');
+yearsUntilRetirement(1969, 'Jane');
+*/
+
+
+/**********************************
+Function statements and expressions
+**********************************/
+
+// function declaration
+/*
+function whatDoYouDo(job, firstName) {
+
+}
+*/
+
+// function expression
+/*
+var whatDoYouDo = function(job, firstName) {
+    switch(job) {
+        case 'teacher':
+            // return value and ends statement, exits function
+            return firstName + ' teaches kids how to code.';
+        case 'driver':
+            return firstName + ' drives a cab in Lisbon.';
+        case 'designer':
+            return firstName + ' designs beautiful websites.';
+        default:
+            return firstName + ' does something else.'
+    }
+}
+
+// log return results to console
+console.log(whatDoYouDo('teacher', 'John'));
+console.log(whatDoYouDo('designer', 'Jane'));
+console.log(whatDoYouDo('retired', 'Mark'));
+*/
+
+
+// expressions are pieces of code that always produce a result
+
+// whenever JavaScript expects a value, we always have to write an expression
+
+// statements/declarations perform actions if/else or while loops
+// does not return anything
+
+
+
+/**********************************
+Arrays
+**********************************/
+/*
+// initialize new array
+var names = ['John', 'Mark', 'Jane'];
+// don't use new Array as often but can be used
+var years = new Array(1990, 1969, 1948);
+
+console.log(names[2]);
+console.log(names.length);
+
+// mutate array data
+names[1] = 'Ben';
+names[names.length] = 'Mary';
+console.log(names);
+
+// different data types
+var john = ['John', 'Smith', 1990, 'designer', false];
+
+// add element to end of array
+john.push('blue');
+// add to beginning of array
+john.unshift('Mr.');
+console.log(john);
+
+// remove element from end
+john.pop();
+john.pop();
+// remove element from beginning
+john.shift();
+console.log(john);
+
+// return position of argument that is passed into array
+// test if element is in array, if it is not then it will return -1
+console.log(john.indexOf(23));
+
+var isDesigner = john.indexOf('designer') === -1 ? 'John is not a designer' : 'John is a designer';
+console.log(isDesigner);
+
+*/
+
+
+/**********************************
+Code challenge 3
+**********************************/
+
+// tip calculator function
+
+// if bill < 50, tip 20%
+// if bill >= 50 && <= 200, tip 15%
+// if bill > 200, tip 10%
+
+/*
+var calculateTip = function(bill) {
+    var tip;
+
+    if (bill < 50) {
+        tip = .20;
+    } else if (bill >= 50 && bill <= 200) {
+        tip = .15;
+    } else {
+        tip = .10;
+    }
+
+    return bill * tip;
+}
+
+var billsArray = [124, 48, 268];
+
+// tip array
+var tipArray = [calculateTip(billsArray[0]), calculateTip(billsArray[1]), calculateTip(billsArray[2])];
+console.log(tipArray);
+
+// final amount (bill + tip)
+var totalBillArray = [billsArray[0] + tipArray[0], billsArray[1] + tipArray[1], billsArray[2] + tipArray[2]];
+console.log(totalBillArray);
+*/
+
+
+/**********************************
+Objects and properties
+**********************************/
+
+// can create using object literal
+// firstName is a property of the john object
+/*
+var john = {
+    // key: value pair
+    firstName: 'John',
+    lastName: 'Smith',
+    birthYear: 1990,
+    family: ['Jane', 'Mark', 'Bob', 'Emily'],
+    job: 'teacher',
+    isMarried: false
+};
+// use dot notation
+console.log(john.lastName);
+// use brackets with string
+console.log(john['lastName']);
+// use variable
+var x = 'birthYear';
+console.log(john[x]);
+
+// mutate data
+john.job = 'designer';
+john['isMarried'] = true;
+console.log(john);
+
+// or can create with new Object syntax
+var jane = new Object();
+jane.name = 'Jane';
+jane.birthYear = 1969;
+jane['lastName'] = 'Smith';
+console.log(jane);
+*/
+
+
+/**********************************
+Objects and methods
+**********************************/
+
+// only objects have methods, array is also an object
+
+// method: function inside of object
+
+/*
+var john = {
+    firstName: 'John',
+    lastName: 'Smith',
+    birthYear: 1992,
+    family: ['Jane', 'Mark', 'Bob', 'Emily'],
+    job: 'teacher',
+    isMarried: false,
+    // function expression assigning to calcAge method
+    calcAge: function() {
+        // "this" is the current object
+        // store result directly in object by defining this.age which is then displayed in object when you call calcAge
+        this.age = 2018 - this.birthYear;
+    }
+};
+
+// access calcAge from the john object
+john.calcAge();
+console.log(john);
+*/
+
+
+/**********************************
+Code challenge 4
+**********************************/
+/*
+var john = {
+    fullName: 'John Smith',
+    mass: 70,
+    height: 1.69,
+    calculateBMI: function() {
+        this.bmi = this.mass / this.height^2;
+
+        return this.bmi;
+    }
+}
+
+// john.calculateBMI();
+// console.log(john);
+
+var mark = {
+    fullName: 'Mark Smithers',
+    mass: 50,
+    height: 1.69,
+    calculateBMI: function() {
+        this.bmi = this.mass / this.height^2;
+
+        return this.bmi;
+    }
+}
+
+// mark.calculateBMI();
+// console.log(mark);
+
+// calculate and read at the same time bc we returned the result so you can access it directly
+if (john.calculateBMI() > mark.calculateBMI()) {
+    console.log(john.fullName + ' has the highest bmi: ' + john.bmi);
+} else if (mark.calculateBMI() > john.calculateBMI()) {
+    console.log(mark.fullName + ' has the highest bmi: ' + mark.bmi);
+} else {
+    console.log(john.fullName + ' and ' + mark.fullName + ' have the same bmi: ' + john.bmi);
+}
+*/
+
+
+
+
+/**********************************
+Loops and iteration
+**********************************/
+
+// for loop
+/*for (var i = 0; i < 10; i++) {
+    console.log(i);
+}
+
+var john = ['John', 'Smith', 1990, 'designer', false];
+
+for (var i = 0; i < john.length; i++) {
+    console.log(john[i]);
+}
+
+
+// while loop , run while condition is true
+var i = 0;
+while(i < john.length) {
+    console.log(john[i]);
+    i++;
+}
+*/
+
+/*
+// continue and break statements.. use to break out of a loop and continue to next one
+var john = ['John', 'Smith', 1990, 'designer', false];
+
+// continue
+for (var i = 0; i < john.length; i++) {
+    // if it's NOT a string, break out of loop and continue to next one
+    if (typeof john[i] !== 'string') continue;
+
+    console.log(john[i]);
+}
+
+// break
+for (var i = 0; i < john.length; i++) {
+    // if it's NOT a string, break out of loop and does NOT continue to next one
+    if (typeof john[i] !== 'string') break;
+
+    console.log(john[i]);
+}
+
+// reverse loop
+for (var i = john.length - 1; i >= 0; i--) {
+    console.log(john[i]);
+}
+*/
+
+
+/**********************************
+Code challenge 5
+**********************************/
+

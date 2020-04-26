@@ -14,3 +14,10 @@ Null: Also means non-existent
 ...
 
 Type coercion: JS automatically converts data types in order to join strings
+
+
+...
+
+// expressions are pieces of code that always produce a result
+
+// whenever JavaScript expects a value, we always have to write an expression
