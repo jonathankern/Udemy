@@ -654,6 +654,105 @@ for (var i = john.length - 1; i >= 0; i--) {
 
 
 /**********************************
-Code challenge 5
+Code challenge 5, lesson 2, section 29
 **********************************/
+/*
+var john = {
+    fullName: 'John Smith',
+    bills: [124, 48, 268, 180, 42],
+    calculateTipAmount: function() {
+        // put tips and bill totals inside method to prevent empty arrays if calculateTipAmount is not used
+        this.tips = [];
+        this.billTotals = [];
+
+        for (var i = 0; i < this.bills.length; i++) {
+            var tip;
+            var bill = this.bills[i];
+            // if / else determine percentage based on tipping rules
+            if (bill < 50) {
+                tip = .2;
+            } else if (bill >= 50 && bill < 200) {
+                tip = .15;
+            } else {
+                tip = .10;
+            }
+
+            // add results to corresponding arrays
+            this.tips[i] = bill * tip;
+            this.billTotals[i] = bill + (bill * tip);
+        }
+    }
+}
+
+var mark = {
+    fullName: 'Mark Johnson',
+    bills: [77, 5, 110, 45],
+    calculateTipAmount: function() {
+        this.tips = [];
+        this.billTotals = [];
+
+        for (var i = 0; i < this.bills.length; i++) {
+            var tip;
+            var bill = this.bills[i];
+            // if / else
+            if (bill < 100) {
+                tip = .2;
+            } else if (bill >= 100 && bill < 300) {
+                tip = .10;
+            } else {
+                tip = .25;
+            }
+
+            // add results to corresponding arrays
+            // calculate tip amount, update this.tips arr
+            this.tips[i] = bill * tip;
+            // add tip amount to bill to get total bill, update this.billTotals arr
+            this.billTotals[i] = bill + (bill * tip);
+        }
+    }
+}
+
+// calculate average of tips
+function averageTip (tips) {
+    // set sum to 0 to begin
+    var sum = 0;
+
+    // get average tip from tips arr
+    for (var i = 0; i < tips.length; i++) {
+        // update sum to sum plus current tip
+        sum = sum + tips[i];
+    }
+
+    return sum / tips.length;
+}
+
+john.calculateTipAmount();
+console.log(john);
+mark.calculateTipAmount();
+console.log(mark);
+
+// calculate average tip amount and store in object
+john.average = averageTip(john.tips);
+mark.average = averageTip(mark.tips);
+
+console.log(john.average);
+console.log(mark.average);
+
+if (john.average > mark.average) {
+    // johns family is greater
+    console.log(john.fullName + ' \'s family paid more in tips with an average of: ' + john.average);
+} else if (mark.average > john.average) {
+    // marks family is greater
+    console.log(mark.fullName + ' \'s family paid more in tips with an average of: ' + mark.average);
+} else {
+    // they are the same
+    console.log('both family\'s paid the same in average tips');
+}
+
+*/
+
+/**********************************
+
+**********************************/
+
 
