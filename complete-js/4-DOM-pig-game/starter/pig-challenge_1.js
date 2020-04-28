@@ -1,52 +1,18 @@
 /*
-GAME RULES:
+Challenge 1:
 
-- The game has 2 players, playing in rounds
-- In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
-- BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
-- The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
-- The first player to reach 100 points on GLOBAL score wins the game
+A player looses his entire score when he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable.)
 
 */
 
 var scores,
     roundScore,
     activePlayer,
-    gamePlaying;
+    gamePlaying,
+    lastDice;
 
 // initialize
 init();
-
-
-
-
-// selects first element of selector
-// put value of dice in the "current" box
-// change text using textContent method and should be equal to dice, use text only
-
-
-// use innerHTML to add html - must use string
-// document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
-
-// read value and store value in var
-// getter, getting value
-// var x = document.querySelector('#score-0').textContent;
-// console.log(x);
-
-
-
-// button function called from click event listener
-// function btn() {
-//     // do something
-// }
-// btn();
-
-// set up event handler
-// 2 arguments - type of event, function that will be called as soon as the event happens
-// callback function" - function that is passed as an argument in another function, (not called by us but called from another function)
-// don't need parenthesis bc we don't want to call it, we want event listener to call it for us
-// document.querySelector('.btn-roll').addEventLister('click', btn);
-
 
 // anonymous function, doesn't have name, cannot be reused outside of this context
 document.querySelector('.btn-roll').addEventListener('click', function() {
@@ -67,8 +33,18 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
         // dice-1.png, dice-2.png, dice-3.png...
         diceDOM.src = 'dice-' + dice + '.png';
 
-        // 3. update the round score IF the rolled number was not a "1"
-        if (dice !== 1) {
+        console.log('dice: ' + dice);
+        console.log('lastDice: ' + lastDice);
+
+        if (dice === 6 && lastDice === 6) {
+            // clear score and round score
+            scores[activePlayer] = 0;
+
+            // update DOM to show 0
+            document.querySelector('#score-' + activePlayer).textContent = '0';
+
+            nextPlayer();
+        } else if (dice !== 1) {
             // add score to update roundScore
             roundScore += dice; // same as writing roundScore + dice
             // make dynamic current- so it could be either 0 or 1
@@ -78,6 +54,9 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             // next player
             nextPlayer();
         }
+
+        // set variable for previous roll so next time we have access to variable
+        lastDice = dice;
     }
 });
 
