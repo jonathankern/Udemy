@@ -138,16 +138,27 @@ i {
 }
 
 .btn-new { top: 45px;}
-.btn-roll { top: 403px;}
-.btn-hold { top: 467px;}
+.btn-roll { top: 453px;}
+.btn-hold { top: 517px;}
 
 .dice {
     position: absolute;
     left: 50%;
-    top: 178px;
     transform: translateX(-50%);
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+
+.dice--one {
+    top: 100px;
+}
+
+.dice--two {
+    top: 215px;
+}
+
+.dice--three {
+    top: 330px;
 }
 
 .winner { background-color: #f7f7f7; }
@@ -158,9 +169,13 @@ i {
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
-.show {
+.next-player-message {
     display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
 }

@@ -33,7 +33,9 @@
             <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
             <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
 
-            <img src="dice-5.png" alt="Dice" class="dice">
+            <img src="dice-5.png" alt="Dice" class="dice dice--one">
+            <img src="dice-5.png" alt="Dice" class="dice dice--two">
+            <img src="dice-5.png" alt="Dice" class="dice dice--three">
 
             <div class="score-container">
                 <span class="hide error-message">You must enter a valid amount!</span>
@@ -41,11 +43,14 @@
                 <input type="number" id="winning-score" placeholder="Set winning score" value="100" />
                 <button class="btn-update">Update</button>
             </div>
+            <div class="next-player-message hide">
+                <p>Sorry! You got a "1", next player goes!</p>
+            </div>
         </div>
 
         <!-- <script src="app.js"></script> -->
         <!-- <script src="pig-challenge_1.js"></script> -->
-        <script src="pig-challenge_2.js"></script>
-        <!-- <script src="pig-challenge_3.js"></script> -->
+        <!-- <script src="pig-challenge_2.js"></script> -->
+        <script src="pig-challenge_3.js"></script>
     </body>
 </html>
