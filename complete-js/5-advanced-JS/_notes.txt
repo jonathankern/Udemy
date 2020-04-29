@@ -1,0 +1,52 @@
+PRIMITIVE VALUES
+
+Numbers
+Strings
+Booleans
+Undefined
+Null
+
+
+EVERYTHING ELSE IS AN OBJECTS
+
+Arrays
+Functions
+Objects
+Dates
+Wrappers for Numbers, Strings, Booleans
+
+
+...
+
+OOP
+
+object-oriented programming
+
+- objects interacting with one another through methods and properties
+
+- used to store data, structure applications into modules and keeping code clean
+
+- one generic objects can be used as a blue print to create as many of those objects. For example the "Person" object. instead of creating a separate object for each person like "John", "Mike", "Jane", etc.
+    - This is called a "Constructor", then you can create as many "instances" as you want. john, mike, jane are instances of the person constructor - which are also objects
+
+- INHERITANCE
+    - when one object is based on another object
+    - when one object gets access to another object's properties and methods
+        - For example, for an "Athlete", they can inherit the "Person" object but it will also have additional properties like "olympics", "olympicMedals", and "allowedOlympics()"
+
+
+- PROTOTYPES
+    - Inheritance works in JS by using prototypes
+    - Each JS object has a prototype property which makes inheritance possible in JS
+
+- Each and every object that we create is an instance of the Object constructure
+
+PROTOTYPE CHAIN
+
+When we try to access a property or method on an object, JS will first try to find it on that object. If it can't find it, it will look at the object's prototype (which is the prototype's property of it's parent). It moves up in the prototype chain. If the method is still not there, it will continue to do this until there is no more prototype to look at -- which is null.
+    - null has no prototype and is the final link in the prototype chain
+        - in this case, undefined is returned
+
+
+...
+
