@@ -301,3 +301,43 @@ function getRandomInteger(min, max) {
 rollDice(getRandomInteger(1, 6))('Jonathan');
 rollDice(getRandomInteger(1, 6))('Charly');
 */
+
+
+
+
+
+/*************************************
+Section 5, lesson 67
+First class functions: advanced js
+objects functions
+
+IIFE - immediately invoked function
+expressions
+*************************************/
+
+// Example of IIFE
+// Used for data privacy not for reusable code .. cannot access from outside scope
+// trick JS parser into thinking it's a function expression and not a function declaration
+// put parenthesis around function then add () to invoke it
+
+/*(function() {
+    var score = Math.random() * 10;
+    console.log(score >= 5);
+})();*/
+
+// can no longer access 'score' variable outside of IIFE
+// console.log(score); // score is not defined
+
+// use params
+/*(function(goodLuck) {
+    var score = Math.random() * 10;
+    console.log(score >= 5 - goodLuck);
+})(5);*/
+
+
+
+
+/*************************************
+Section 5, lesson 68
+
+*************************************/
