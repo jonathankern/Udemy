@@ -232,3 +232,72 @@ console.log(ages);
 console.log(fullAges);
 console.log(rates);
 */
+/*************************************
+Section 5, lesson 66
+First class functions: functions
+returning functions
+*************************************/
+
+// creates diff interview questions
+// each job return function that builds a string using the person's name as an input
+// function returning another function
+
+/*
+function interviewQuestion(job) {
+    if (job === 'designer') {
+        // anonymous function
+        return function(name) {
+            console.log(name + ', can you please explain what UX design is?');
+        }
+    } else if (job === 'teacher'){
+        return function(name) {
+            console.log(name + ', what subject do you teach?');
+        }
+    } else {
+        return function(name) {
+            console.log('Hello ' + name + ', what do you do?');
+        }
+    }
+}
+
+// store result
+// var teacherQuestion = interviewQuestion('teacher');
+// var designerQuestion = interviewQuestion('designer');
+
+// teacherQuestion('John');
+// designerQuestion('John');
+// designerQuestion('Jane');
+// designerQuestion('Mark');
+
+// ORRR easier just call both functions bc it's evaluated from left to right
+interviewQuestion('teacher')('Mark');
+*/
+
+// make decision about dice depending on the number that was thrown
+/* USE THIS FOR DICE APP */
+/*
+function rollDice(diceNumber) {
+    console.log(diceNumber);
+    // if 1 or 5, keep rolling
+    if (diceNumber === 1 || diceNumber === 5) {
+        return function(name) {
+            console.log('keep rolling, ' + name);
+        }
+    } else {
+        // otherwise, lose turn
+        return function(name) {
+            console.log('sorry ' + name + ', your turn is over');
+        }
+    }
+}
+
+function getRandomInteger(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max-min)) + min;
+}
+
+rollDice(getRandomInteger(1, 6))('Jonathan');
+rollDice(getRandomInteger(1, 6))('Charly');
+*/
