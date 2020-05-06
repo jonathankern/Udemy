@@ -133,7 +133,7 @@ Primitives vs. Objects
 
 // variables containing primitives hold data inside of var itself
 // primitives
-var a = 23;
+/*var a = 23;
 var b = a;
 
 a = 46;
@@ -155,8 +155,8 @@ var obj2 = obj1;
 
 obj1.age = 30;
 
-console.log(obj1.age);
-console.log(obj2.age);
+console.log(obj1.age); // 30
+console.log(obj2.age); // 26
 
 
 // functions
@@ -175,3 +175,60 @@ change(age, obj);
 
 console.log(age); // 27, primitive remained unchanged
 console.log(obj.city); // San Francisco, object changed to new city
+*/
+
+
+/*************************************
+Section 5, lesson 65
+First class functions: passing
+functions as arguments
+*************************************/
+/*
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(array, callback) {
+    // loop over array and return a result
+    // create new empty array
+    var arrayResult = [];
+
+    for (var i = 0; i < array.length; i++) {
+        // push into array - result of invoking callback function and pass current element array[i]
+        // callback is a callback function
+        arrayResult.push(callback(array[i]));
+    }
+    // return result of array
+    return arrayResult;
+}
+
+function calculateAge(element) {
+    return 2016 - element;
+}
+
+// is someone full age
+function isFullAge(element) {
+    // return true or false
+    return element >= 18;
+}
+
+// max heart rate
+function maxHeartRate(element) {
+    if (element >= 18 && element <= 81) {
+        // round to nearest integer
+        return Math.round(206.9 - (0.67 * element));
+    } else {
+        return -1;
+    }
+}
+
+// pass "calculateAge" callback function as parameter
+// but we are not invoking it now (or else it would have "()")
+var ages = arrayCalc(years, calculateAge);
+// check to see if someone is full age
+var fullAges = arrayCalc(ages, isFullAge);
+var rates = arrayCalc(ages, maxHeartRate);
+
+
+console.log(ages);
+console.log(fullAges);
+console.log(rates);
+*/
