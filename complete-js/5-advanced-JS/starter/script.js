@@ -417,3 +417,91 @@ alternateQuestion('Jane');
 */
 
 
+
+
+
+/*************************************
+Section 5, lesson 69
+First class functions: advanced js
+objects functions
+
+Bind, call and apply
+*************************************/
+
+/*
+var john = {
+    name: 'John',
+    age: 26,
+    job: 'teacher',
+    presentation: function(style, timeOfDay) {
+        if (style === 'formal') {
+            console.log('Good ' + timeOfDay + ', Ladies and gentlemen! I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old.');
+        } else if (style === 'friendly') {
+            console.log('Hey! What\'s up? I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' + timeOfDay + '.');
+        }
+    }
+};
+
+var emily = {
+    name: 'Emily',
+    age: 35,
+    job: 'designer'
+}
+
+john.presentation('formal', 'morning');
+
+// "call" method can be used to set the 'this' keyword as our first argument
+// "method borrowing" because we are borrowing the "presentation" method from the "john" object
+john.presentation.call(emily, 'friendly', 'afternoon');
+
+
+
+// "apply" method - accepts arguments as an array
+// john.presentation.apply(emily, ['friendly', 'afternoon']);
+
+
+
+// "bind" method allows us to set the this variable explicity and will return a function, but it generates a copy of the function so we can store it somewhere.. will get stored in friendly.
+// "bind" allows us to preset some arguments
+
+var johnFriendly = john.presentation.bind(john, 'friendly');
+
+johnFriendly('morning');
+johnFriendly('night');
+
+var emilyFormal = john.presentation.bind(emily, 'formal');
+emilyFormal('afternoon');
+
+*/
+
+
+// example from earlier
+/*
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(array, callback) {
+    var arrayResult = [];
+
+    for (var i = 0; i < array.length; i++) {
+        arrayResult.push(callback(array[i]));
+    }
+    return arrayResult;
+}
+
+function calculateAge(element) {
+    return 2016 - element;
+}
+
+function isFullAge(limit, element) {
+    return element >= limit;
+}
+
+var ages = arrayCalc(years, calculateAge);
+
+// bind method always has to have this keyword first
+// this will be a copy of the isFullAge function with 20 as the preset argument for "limit"
+var fullJapan = arrayCalc(ages, isFullAge.bind(this, 20));
+console.log(ages);
+console.log(fullJapan);
+
+*/
