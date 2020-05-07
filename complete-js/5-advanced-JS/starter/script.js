@@ -505,3 +505,137 @@ console.log(ages);
 console.log(fullJapan);
 
 */
+
+
+/* Code challenge 7 */
+
+/* MY ORIGINAL ANSWER W/STRING
+// Question constructor
+(function(){
+    var Question = function(question, answerChoices, correctAnswer) {
+        this.question = question;
+        this.answerChoices = answerChoices;
+        this.correctAnswer = correctAnswer;
+    }
+
+    // create a few questions from constructor
+    var cityQuestion = new Question('Which is the largest city?', ['New York', 'Miami', 'San Francisco'], 'New York');
+
+    var transportationQuestion = new Question('What mode of transportation is the most fun?', ['Bus', 'Subway', 'Bike'], 'Bike');
+
+    var seasonQuestion = new Question('What\'s the best season?', ['Spring', 'Summer', 'Fall', 'Winter'], 'Summer');
+
+    // store Questions in array
+    var questionsArray = [cityQuestion, transportationQuestion, seasonQuestion];
+
+    console.log(questionsArray);
+
+    console.log(Math.round(Math.random() * 2));
+
+
+    Question.prototype.chooseRandomQuestion = function() {
+        console.log(this.question);
+        console.log(this.answerChoices);
+        console.log(this.correctAnswer);
+
+        var userAnswer = window.prompt(this.question + ' ' + this.answerChoices);
+
+        console.log(userAnswer);
+
+        if (userAnswer === this.correctAnswer) {
+            console.log('Correct!');
+        } else {
+            console.log('NOPE!');
+        }
+    }
+
+    // pick random question
+    questionsArray[Math.round(Math.random() * 2)].chooseRandomQuestion();
+})();
+*/
+
+/* Advanced code challenge */
+(function(){
+    var score;
+
+    // constructor
+    var Question = function(question, answerChoices, correctAnswer) {
+        this.question = question;
+        this.answerChoices = answerChoices;
+        this.correctAnswer = correctAnswer;
+    }
+
+    Question.prototype.chooseRandomQuestion = function() {
+        console.log(this.question);
+        console.log(this.answerChoices);
+        console.log(this.correctAnswer);
+
+        for (var i = 0; i < this.answerChoices.length; i++) {
+            console.log(i + ': ' + this.answerChoices[i]);
+        }
+    }
+
+    Question.prototype.checkAnswer = function(answer, callback) {
+        if (answer === this.correctAnswer) {
+            console.log('Correct!');
+            score = callback(true);
+        } else {
+            console.log('NOPE! Please try again');
+            score = callback(false);
+        }
+
+        this.displayScore(score);
+    }
+
+    // display score
+    Question.prototype.displayScore = function(checkScore) {
+        console.log('Your current score is: ' + checkScore);
+        console.log('-------------------------------');
+    }
+
+    // create a few questions from constructor
+    var cityQuestion = new Question('Which is the largest city?', ['New York', 'Miami', 'San Francisco'], 0);
+
+    var transportationQuestion = new Question('What mode of transportation is the most fun?', ['Bus', 'Subway', 'Bike'], 2);
+
+    var seasonQuestion = new Question('What\'s the best season?', ['Spring', 'Summer', 'Fall', 'Winter'], 1);
+
+    // store Questions in array
+    var questionsArray = [cityQuestion, transportationQuestion, seasonQuestion];
+
+    function checkScore() {
+        score = 0;
+
+        return function(isCorrect) {
+            if (isCorrect) {
+                score++;
+            }
+
+            return score;
+        }
+    }
+
+    var keepScore = checkScore();
+
+    function showNextQuestion() {
+        var randomNumber = Math.floor(Math.random() * questionsArray.length);
+
+        // this will give us random number
+        questionsArray[randomNumber].chooseRandomQuestion();
+
+        var userAnswer = prompt('Please select the correct answer.');
+
+        if (userAnswer === 'exit') {
+            console.log('exit program');
+        } else {
+            userAnswer = parseInt(userAnswer);
+
+            questionsArray[randomNumber].checkAnswer(userAnswer, keepScore);
+
+            showNextQuestion();
+        }
+    }
+
+    showNextQuestion();
+})();
+
