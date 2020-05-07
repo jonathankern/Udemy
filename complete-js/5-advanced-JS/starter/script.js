@@ -339,5 +339,81 @@ expressions
 
 /*************************************
 Section 5, lesson 68
+First class functions: advanced js
+objects functions
 
+Closures
 *************************************/
+
+// Closure is when the variables from an outer function that was already returned is still available for the inner function
+// "An inner function always has access to the variables and parameters of its outer function, even after the outer function has returned."
+
+
+// function return function which calculates how many years until retirement
+
+/*function retirement(retirementAge) {
+    var a = ' years left until retirement.'
+    return function(yearOfBirth) {
+        var age = 2016 - yearOfBirth;
+        console.log((retirementAge - age) + a);
+    }
+}
+
+var retirementUS = retirement(66);
+var retirementGermany = retirement(65);
+var retirementIceland = retirement(67);
+
+retirementUS(1990);
+retirementGermany(1990);
+retirementIceland(1990);
+*/
+// or
+// retirement(66)(1990);
+
+
+
+// refactor interview function to use closures below
+/*function interviewQuestion(job) {
+    if (job === 'designer') {
+        // anonymous function
+        return function(name) {
+            console.log(name + ', can you please explain what UX design is?');
+        }
+    } else if (job === 'teacher'){
+        return function(name) {
+            console.log(name + ', what subject do you teach?');
+        }
+    } else {
+        return function(name) {
+            console.log('Hello ' + name + ', what do you do?');
+        }
+    }
+}*/
+
+// refactor interview function to use closures
+/*function interviewQuestion(job) {
+    var designerDescription = ', can you please explain what UX design is?';
+    var teacherDescription = ', what subject do you teach?';
+    var alternateDescription = ', what do you do?';
+
+    return function(name) {
+        if (job === 'designer') {
+            console.log(name + designerDescription);
+        } else if (job === 'teacher') {
+            console.log(name + teacherDescription);
+        } else {
+            console.log(name + alternateDescription);
+        }
+    }
+}
+
+var designerQuestion = interviewQuestion('designer');
+var teacherQuestion = interviewQuestion('teacher');
+var alternateQuestion = interviewQuestion('carpenter');
+
+designerQuestion('John');
+teacherQuestion('Mark');
+alternateQuestion('Jane');
+*/
+
+
