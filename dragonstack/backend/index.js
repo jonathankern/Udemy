@@ -1,22 +1,9 @@
-const Dragon = require('./dragon.js'); // import dragon class
+const GenerationEngine = require('./engine');
 
-const fooey = new Dragon({
-    birthdate: new Date(),
-    nickname: 'fooey'
-});
+const engine = new GenerationEngine();
 
-const baloo = new Dragon({
-    birthdate: new Date(),
-    nickname: 'baloo'
-});
-
-const mimar = new Dragon();
+engine.start();
 
 setTimeout(() => {
-    const gooby = new Dragon();
-    console.log('gooby', gooby);
-}, 3000);
-
-console.log('fooey', fooey);
-console.log('baloo', baloo);
-console.log('mimar', mimar);
+    engine.stop();
+}, 20000);
