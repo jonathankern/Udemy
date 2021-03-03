@@ -5,6 +5,11 @@ const pool = new Pool(databaseConfiguration); // primary way of interacting with
 
 module.exports = pool;
 
+
+
+
+
+
 // DEBUG (string represents sql to retrieve from or insert data into a data, callback function with error and response object) 
 // pool.query('SELECT * FROM generation', (error, response) => {
 //     if (error) return console.log('error', error);
