@@ -8,6 +8,8 @@ class Generation {
     constructor() {
         // self contained in generation object itself
         this.expiration = this.calculateExpiration(); 
+        // will need to set id to the value that postresql determines for the next generation when it gets inserted
+        this.generationID = undefined; 
     }
 
     // helper function, calculation algorithm can later become more complex
