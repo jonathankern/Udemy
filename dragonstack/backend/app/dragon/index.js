@@ -1,9 +1,10 @@
 // use scream case that don't change values for the application
 
-const TRAITS = require ('../data/traits.json');
+const TRAITS = require ('../../data/traits.json');
 
 const DEFAULT_PROPERTIES = {
     nickname: 'unnamed',
+    generationId: undefined,
     get birthdate() { // getter method will run new date at time of execution
         return new Date()
     },
@@ -29,11 +30,12 @@ const DEFAULT_PROPERTIES = {
 }; 
 
 class Dragon {
-    // accept incoming object with "birthdate" and "nickname" keys
-    constructor({ birthdate, nickname, traits } = {}) { // set to empty object in case no properties provided
+    // accept incoming object with keys
+    constructor({ birthdate, nickname, traits, generationId } = {}) { // set to empty object in case no properties provided
         this.birthdate = birthdate || DEFAULT_PROPERTIES.birthdate; // use defaults if no values provide
         this.nickname = nickname || DEFAULT_PROPERTIES.nickname;
         this.traits = traits || DEFAULT_PROPERTIES.randomTraits;
+        this.generationId = generationId || DEFAULT_PROPERTIES.generationId;
     }
 }
 

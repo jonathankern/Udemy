@@ -1,4 +1,4 @@
-const Dragon = require('../dragon');
+const Dragon = require('../dragon/index.js');
 const { REFRESH_RATE, SECONDS } = require('../config');
 
 const refreshRate = REFRESH_RATE * SECONDS;
@@ -29,7 +29,7 @@ class Generation {
             throw new Error(`This generation expired on ${this.expiration}`);
         }
 
-        return new Dragon();
+        return new Dragon({ generationId: this.generationId });
     }
 }
 
