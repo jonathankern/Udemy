@@ -11,6 +11,14 @@ app.locals.engine = engine;
 app.use('/dragon', dragonRouter); // (subroute, router instance) attach all routes that we define on the /dragon subroute
 app.use('/generation', generationRouter);
 
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+
+    res.status(statusCode).json({
+        type: 'error', message: err.message
+    })
+});
+
 engine.start();
 
 module.exports = app;
