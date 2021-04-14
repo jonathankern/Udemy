@@ -8,15 +8,15 @@ router.get('/new', (req, res, next) => {
     const dragon = req.app.locals.engine.generation.newDragon();
 
     DragonTable.storeDragon(dragon)
-    .then(({ dragonId }) => {
-        console.log('dragonId', dragonId);
+        .then(({ dragonId }) => {
+            console.log('dragonId', dragonId);
 
-        dragon.dragonId = dragonId;
+            dragon.dragonId = dragonId;
 
-        // respond back to the user with some json. configure object with dragon key and define value to get current generation
-        res.json({ dragon });
-    })
-    .catch(error => next(error));
+            // respond back to the user with some json. configure object with dragon key and define value to get current generation
+            res.json({ dragon });
+        })
+        .catch(error => next(error));
 });
 
 module.exports = router;

@@ -1,5 +1,4 @@
 // used to hold any methods to interact with generation table
-
 const pool = require('../../databasePool');
 
 // collect related methods

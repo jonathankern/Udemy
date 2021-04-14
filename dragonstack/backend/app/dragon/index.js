@@ -1,5 +1,4 @@
 // use scream case that don't change values for the application
-
 const TRAITS = require ('../../data/traits.json');
 
 const DEFAULT_PROPERTIES = {
