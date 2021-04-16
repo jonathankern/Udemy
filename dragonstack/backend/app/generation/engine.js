@@ -23,7 +23,7 @@ class GenerationEngine {
         const generation = new Generation();
 
         GenerationTable.storeGeneration(generation)
-            .then(({ generationId}) => {
+            .then(({ generationId }) => {
                 // Keep track of current generation using `this.generation` in the class
                 this.generation = generation;
                 
