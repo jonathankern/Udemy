@@ -27,8 +27,8 @@ class GenerationEngine {
                 // Keep track of current generation using `this.generation` in the class
                 this.generation = generation;
                 
-                // set this generationID to incoming generationID that we have from the promise
-                this.generation.generationID = generationId;
+                // set this generationId to incoming generationId that we have from the promise
+                this.generation.generationId = generationId;
                 
                 console.log('new generation', this.generation);
 
