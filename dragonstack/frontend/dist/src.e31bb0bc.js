@@ -18464,6 +18464,7 @@ var DEFAULT_GENERATION = {
   generationId: '',
   expiration: ''
 };
+var MINIMUM_DELAY = 3000;
 
 var Generation = /*#__PURE__*/function (_Component) {
   _inherits(Generation, _Component);
@@ -18481,7 +18482,7 @@ var Generation = /*#__PURE__*/function (_Component) {
 
     return _possibleConstructorReturn(_this, (_temp = _this = _super.call.apply(_super, [this].concat(args)), _this.state = {
       generation: DEFAULT_GENERATION
-    }, _this.fetchGeneration = function () {
+    }, _this.timer = null, _this.fetchGeneration = function () {
       fetch('http://localhost:3000/generation').then(function (response) {
         return response.json();
       }).then(function (json) {
@@ -18493,13 +18494,34 @@ var Generation = /*#__PURE__*/function (_Component) {
       }).catch(function (error) {
         return console.error('error', error);
       });
+    }, _this.fetchNextGeneration = function () {
+      _this.fetchGeneration();
+
+      var delay = new Date(_this.state.generation.expiration).getTime() - new Date().getTime(); // get difference between this expiration time value and current time value
+
+      if (delay < MINIMUM_DELAY) {
+        delay = MINIMUM_DELAY;
+      }
+
+      ;
+      _this.timer = setTimeout(function () {
+        return _this.fetchNextGeneration();
+      }, delay); // Recursive function - calls itself and dynamically renews generation
     }, _temp));
   }
 
   _createClass(Generation, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      this.fetchGeneration();
+    value: // Default value, define object that has not been set yet
+    // Fetch generation if component is loaded in DOM
+    function componentDidMount() {
+      this.fetchNextGeneration();
+    } // Stop loop if component is removed from DOM - destroy, cleanup here
+
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      clearTimeout(this.timer); // removes reference of setTimeout
     }
   }, {
     key: "render",
