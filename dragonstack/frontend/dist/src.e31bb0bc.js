@@ -18460,6 +18460,11 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+var DEFAULT_GENERATION = {
+  generationId: '',
+  expiration: ''
+};
+
 var Generation = /*#__PURE__*/function (_Component) {
   _inherits(Generation, _Component);
 
@@ -18475,13 +18480,18 @@ var Generation = /*#__PURE__*/function (_Component) {
     }
 
     return _possibleConstructorReturn(_this, (_temp = _this = _super.call.apply(_super, [this].concat(args)), _this.state = {
-      generation: {
-        generationId: 999,
-        expiration: '2020-05-01'
-      }
+      generation: DEFAULT_GENERATION
     }, _this.fetchGeneration = function () {
       fetch('http://localhost:3000/generation').then(function (response) {
-        return console.log('response', response);
+        return response.json();
+      }).then(function (json) {
+        console.log('json', json);
+
+        _this.setState({
+          generation: json.generation
+        });
+      }).catch(function (error) {
+        return console.error('error', error);
       });
     }, _temp));
   }
