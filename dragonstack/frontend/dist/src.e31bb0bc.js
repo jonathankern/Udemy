@@ -39011,12 +39011,12 @@ var DEFAULT_GENERATION = {
   generationId: '',
   expiration: ''
 };
+var GENERATION_ACTION_TYPE = 'GENERATION_ACTION_TYPE';
 
 var generationReducer = function generationReducer(state, action) {
-  console.log('generationReducer state', state);
-  console.log('generationReducer action', action);
-
-  if (action.type === 'GENERATION_ACTION_TYPE') {
+  // console.log('generationReducer state', state);
+  // console.log('generationReducer action', action);
+  if (action.type === GENERATION_ACTION_TYPE) {
     return {
       generation: action.generation
     };
@@ -39029,20 +39029,42 @@ var generationReducer = function generationReducer(state, action) {
   };
 };
 
-var store = (0, _redux.createStore)(generationReducer); // console.log('store', store);
-// console.log('store.getState()', store.getState())
+var store = (0, _redux.createStore)(generationReducer);
+store.subscribe(function () {
+  return console.log('store state update', store.getState());
+}); // log current state of store, subscribe is a listener
+
+console.log('store', store); // console.log('store.getState()', store.getState())
 
 store.dispatch({
   type: 'foo'
 });
 store.dispatch({
-  type: 'GENERATION_ACTION_TYPE',
+  type: GENERATION_ACTION_TYPE,
   generation: {
     generationId: 'goo',
     expiration: 'bar'
   }
 });
 console.log('store.getState()', store.getState());
+
+var generationActionCreator = function generationActionCreator(payload) {
+  return {
+    type: GENERATION_ACTION_TYPE,
+    generation: payload
+  };
+};
+
+var zooAction = generationActionCreator({
+  generationId: 'zoo',
+  expiration: 'bar'
+});
+store.dispatch(zooAction);
+fetch('http://localhost:3000/generation').then(function (response) {
+  return response.json();
+}).then(function (json) {
+  store.dispatch(generationActionCreator(json.generation));
+});
 (0, _reactDom.render)( /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Dragon Stack from React"), /*#__PURE__*/_react.default.createElement(_Generation.default, null), /*#__PURE__*/_react.default.createElement(_Dragon.default, null)), document.getElementById('root'));
 },{"react":"../node_modules/react/index.js","redux":"../node_modules/redux/es/redux.js","react-dom":"../node_modules/react-dom/index.js","./components/Generation":"components/Generation.js","./components/Dragon":"components/Dragon.js","./index.css":"index.css"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
