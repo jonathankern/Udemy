@@ -38887,8 +38887,7 @@ var Dragon = /*#__PURE__*/function (_Component) {
       fetch('http://localhost:3000/dragon/new').then(function (response) {
         return response.json();
       }).then(function (json) {
-        console.log('json', json);
-
+        // console.log('json', json);
         _this.setState({
           dragon: json.dragon
         });
@@ -39013,16 +39012,36 @@ var DEFAULT_GENERATION = {
   expiration: ''
 };
 
-var generationReducer = function generationReducer() {
+var generationReducer = function generationReducer(state, action) {
+  console.log('generationReducer state', state);
+  console.log('generationReducer action', action);
+
+  if (action.type === 'GENERATION_ACTION_TYPE') {
+    return {
+      generation: action.generation
+    };
+  }
+
   return {
     generation: {
-      generationId: DEFAULT_GENERATION
+      generation: DEFAULT_GENERATION
     }
   };
 };
 
-var store = (0, _redux.createStore)(generationReducer);
-console.log('store', store);
+var store = (0, _redux.createStore)(generationReducer); // console.log('store', store);
+// console.log('store.getState()', store.getState())
+
+store.dispatch({
+  type: 'foo'
+});
+store.dispatch({
+  type: 'GENERATION_ACTION_TYPE',
+  generation: {
+    generationId: 'goo',
+    expiration: 'bar'
+  }
+});
 console.log('store.getState()', store.getState());
 (0, _reactDom.render)( /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Dragon Stack from React"), /*#__PURE__*/_react.default.createElement(_Generation.default, null), /*#__PURE__*/_react.default.createElement(_Dragon.default, null)), document.getElementById('root'));
 },{"react":"../node_modules/react/index.js","redux":"../node_modules/redux/es/redux.js","react-dom":"../node_modules/react-dom/index.js","./components/Generation":"components/Generation.js","./components/Dragon":"components/Dragon.js","./index.css":"index.css"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
