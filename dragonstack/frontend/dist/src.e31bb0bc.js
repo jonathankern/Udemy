@@ -21658,9 +21658,13 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GENERATION_ACTION_TYPE = void 0;
-var GENERATION_ACTION_TYPE = 'GENERATION_ACTION_TYPE';
-exports.GENERATION_ACTION_TYPE = GENERATION_ACTION_TYPE;
+exports.GENERATION = void 0;
+var GENERATION = {
+  FETCH: 'GENERATION_FETCH',
+  FETCH_ERROR: 'GENERATION_FETCH_ERROR',
+  FETCH_SUCCESS: 'GENERATION_FETCH_SUCCESS'
+};
+exports.GENERATION = GENERATION;
 },{}],"actions/generation.js":[function(require,module,exports) {
 "use strict";
 
@@ -21673,12 +21677,24 @@ var _types = require("./types");
 
 var generationActionCreator = function generationActionCreator(payload) {
   return {
-    type: _types.GENERATION_ACTION_TYPE,
+    type: GENERATION_ACTION_TYPE,
     generation: payload
   };
 };
 
 exports.generationActionCreator = generationActionCreator;
+
+var fetchGeneration = function fetchGeneration() {
+  return function (dispatch) {
+    return fetch('http://localhost:3000/generation').then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      dispatch(generationActionCreator(json.generation));
+    }).catch(function (error) {
+      return console.error('error', error);
+    });
+  };
+};
 },{"./types":"actions/types.js"}],"components/Generation.js":[function(require,module,exports) {
 "use strict";
 
@@ -21781,18 +21797,6 @@ var mapStateToProps = function mapStateToProps(state) {
   var generation = state.generation;
   return {
     generation: generation
-  };
-};
-
-var fetchGeneration = function fetchGeneration() {
-  return function (dispatch) {
-    return fetch('http://localhost:3000/generation').then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      dispatch((0, _generation.generationActionCreator)(json.generation));
-    }).catch(function (error) {
-      return console.error('error', error);
-    });
   };
 };
 

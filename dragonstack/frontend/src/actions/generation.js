@@ -1,4 +1,4 @@
-import { GENERATION_ACTION_TYPE } from './types';
+import { GENERATION } from './types';
 
 export const generationActionCreator = (payload) => {
     return {
@@ -6,3 +6,12 @@ export const generationActionCreator = (payload) => {
         generation: payload
     };
 }
+
+const fetchGeneration = () => dispatch => {
+    return fetch('http://localhost:3000/generation')
+        .then(response => response.json())
+        .then(json => {
+            dispatch(generationActionCreator(json.generation))
+        })
+        .catch(error => console.error('error', error));
+};
