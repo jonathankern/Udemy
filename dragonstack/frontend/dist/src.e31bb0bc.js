@@ -21671,30 +21671,39 @@ exports.GENERATION = GENERATION;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generationActionCreator = void 0;
+exports.fetchGeneration = void 0;
 
 var _types = require("./types");
 
-var generationActionCreator = function generationActionCreator(payload) {
-  return {
-    type: GENERATION_ACTION_TYPE,
-    generation: payload
-  };
-};
-
-exports.generationActionCreator = generationActionCreator;
-
 var fetchGeneration = function fetchGeneration() {
   return function (dispatch) {
+    dispatch({
+      type: _types.GENERATION.FETCH
+    });
     return fetch('http://localhost:3000/generation').then(function (response) {
       return response.json();
     }).then(function (json) {
-      dispatch(generationActionCreator(json.generation));
+      if (json.type === 'error') {
+        dispatch({
+          type: _types.GENERATION.FETCH_ERROR,
+          message: json.message
+        });
+      } else {
+        dispatch({
+          type: _types.GENERATION.FETCH_SUCCESS,
+          generation: json.generation
+        });
+      }
     }).catch(function (error) {
-      return console.error('error', error);
+      return dispatch({
+        type: _types.GENERATION.FETCH_ERROR,
+        message: error.message
+      });
     });
   };
 };
+
+exports.fetchGeneration = fetchGeneration;
 },{"./types":"actions/types.js"}],"components/Generation.js":[function(require,module,exports) {
 "use strict";
 
@@ -21801,7 +21810,7 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var componentConnector = (0, _reactRedux.connect)(mapStateToProps, {
-  fetchGeneration: fetchGeneration
+  fetchGeneration: _generation.fetchGeneration
 });
 
 var _default = componentConnector(Generation);
@@ -40591,39 +40600,71 @@ var Dragon = /*#__PURE__*/function (_Component) {
 
 var _default = Dragon;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-bootstrap":"../node_modules/react-bootstrap/es/index.js","./DragonAvatar":"components/DragonAvatar.js"}],"reducers/index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap":"../node_modules/react-bootstrap/es/index.js","./DragonAvatar":"components/DragonAvatar.js"}],"reducers/generation.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generationReducer = void 0;
+exports.default = void 0;
 
 var _types = require("../actions/types");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var DEFAULT_GENERATION = {
   generationId: '',
   expiration: ''
 };
 
-var generationReducer = function generationReducer(state, action) {
-  // console.log('generationReducer state', state);
-  // console.log('generationReducer action', action);
-  if (action.type === _types.GENERATION_ACTION_TYPE) {
-    return {
-      generation: action.generation
-    };
-  }
+var generationReducer = function generationReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_GENERATION;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  return {
-    generation: {
-      generation: DEFAULT_GENERATION
-    }
-  };
+  switch (action.type) {
+    case _types.GENERATION.FETCH_ERROR:
+      return state;
+
+    case _types.GENERATION.FETCH_ERROR:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        message: action.message
+      });
+
+    case _types.GENERATION.FETCH_SUCCESS:
+      return _objectSpread(_objectSpread({}, state), action.generation);
+
+    default:
+      return state;
+  }
 };
 
-exports.generationReducer = generationReducer;
-},{"../actions/types":"actions/types.js"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var _default = generationReducer;
+exports.default = _default;
+},{"../actions/types":"actions/types.js"}],"reducers/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _generation = _interopRequireDefault(require("./generation"));
+
+var _redux = require("redux");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// function that takes multiple reducers and joins them into 1 reducer function
+var _default = (0, _redux.combineReducers)({
+  generation: _generation.default
+});
+
+exports.default = _default;
+},{"./generation":"reducers/generation.js","redux":"../node_modules/redux/es/redux.js"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -40712,13 +40753,13 @@ var _Generation = _interopRequireDefault(require("./components/Generation"));
 
 var _Dragon = _interopRequireDefault(require("./components/Dragon"));
 
-var _reducers = require("./reducers");
+var _reducers = _interopRequireDefault(require("./reducers"));
 
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_reducers.generationReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), (0, _redux.applyMiddleware)(_reduxThunk.default));
+var store = (0, _redux.createStore)(_reducers.default, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), (0, _redux.applyMiddleware)(_reduxThunk.default));
 (0, _reactDom.render)( /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
   store: store
 }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Dragon Stack from React"), /*#__PURE__*/_react.default.createElement(_Generation.default, null), /*#__PURE__*/_react.default.createElement(_Dragon.default, null))), document.getElementById('root'));
@@ -40750,7 +40791,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61468" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55016" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
