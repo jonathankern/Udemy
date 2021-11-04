@@ -1,10 +1,11 @@
 import { DRAGON } from './types';
+import { BACKEND } from '../config';
 
 // Use double arrow to pass a callback
 export const fetchDragon = () => dispatch => {
     dispatch({ type: DRAGON.FETCH });
 
-    return fetch('http://localhost:3000/dragon/new')
+    return fetch(`${BACKEND.ADDRESS}/dragon/new`)
         .then(response => response.json())
         .then(json => {
             if (json.type === 'error') {

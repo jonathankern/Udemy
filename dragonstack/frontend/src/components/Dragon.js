@@ -1,52 +1,27 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import DragonAvatar from './DragonAvatar';
 import { connect } from 'react-redux';
 import { fetchDragon } from '../actions/dragon';
-import fetchStates from '../reducers/fetchStates';
+import { Button } from 'react-bootstrap';
+import DragonAvatar from './DragonAvatar';
 
 class Dragon extends Component {
-    componentDidMount() {
-        this.fetchNextDragon();
-    }
-
-    fetchNextDragon = () => {
-        this.props.fetchDragon();
-    };
-
     render() {
-        console.log('this.props dragon', this.props);
-
-        const { dragon } = this.props;
-
-        if (dragon.status === fetchStates.error) {
-            return <div>{dragon.message}</div>;
-        }
-
         return (
             <div>
                 <Button
-                    onClick={this.fetchNextDragon}
+                    onClick={this.props.fetchDragon}
                 >
                     New Dragon
                 </Button>
                 <DragonAvatar
-                    dragon={dragon}
+                    dragon={this.props.dragon}
                 />
             </div>
         )
     }
 }
 
-const mapStateToProps = state => {
-    const dragon = state.dragon;
-
-    return { dragon };
-};
-
-const componentConnector = connect(
-    mapStateToProps,
+export default connect(
+    ({ dragon }) => ({ dragon }), // shorthand for return, use () instead of return keyword
     { fetchDragon }
-);
-
-export default componentConnector(Dragon);
+)(Dragon);

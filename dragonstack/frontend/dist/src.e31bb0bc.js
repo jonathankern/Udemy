@@ -21671,6 +21671,17 @@ var DRAGON = {
   FETCH_SUCCESS: 'DRAGON_FETCH_SUCCESS'
 };
 exports.DRAGON = DRAGON;
+},{}],"config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.BACKEND = void 0;
+var BACKEND = {
+  ADDRESS: 'http://localhost:3000'
+};
+exports.BACKEND = BACKEND;
 },{}],"actions/generation.js":[function(require,module,exports) {
 "use strict";
 
@@ -21681,12 +21692,14 @@ exports.fetchGeneration = void 0;
 
 var _types = require("./types");
 
+var _config = require("../config");
+
 var fetchGeneration = function fetchGeneration() {
   return function (dispatch) {
     dispatch({
       type: _types.GENERATION.FETCH
     });
-    return fetch('http://localhost:3000/generation').then(function (response) {
+    return fetch("".concat(_config.BACKEND.ADDRESS, "/generation")).then(function (response) {
       return response.json();
     }).then(function (json) {
       if (json.type === 'error') {
@@ -21710,7 +21723,7 @@ var fetchGeneration = function fetchGeneration() {
 };
 
 exports.fetchGeneration = fetchGeneration;
-},{"./types":"actions/types.js"}],"reducers/fetchStates.js":[function(require,module,exports) {
+},{"./types":"actions/types.js","../config":"config.js"}],"reducers/fetchStates.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -21844,7 +21857,49 @@ var componentConnector = (0, _reactRedux.connect)(mapStateToProps, {
 var _default = componentConnector(Generation);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/generation":"actions/generation.js","../reducers/fetchStates":"reducers/fetchStates.js"}],"../node_modules/babel-runtime/node_modules/core-js/library/modules/_global.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/generation":"actions/generation.js","../reducers/fetchStates":"reducers/fetchStates.js"}],"actions/dragon.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchDragon = void 0;
+
+var _types = require("./types");
+
+var _config = require("../config");
+
+// Use double arrow to pass a callback
+var fetchDragon = function fetchDragon() {
+  return function (dispatch) {
+    dispatch({
+      type: _types.DRAGON.FETCH
+    });
+    return fetch("".concat(_config.BACKEND.ADDRESS, "/dragon/new")).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      if (json.type === 'error') {
+        dispatch({
+          type: _types.DRAGON.FETCH_ERROR,
+          message: json.message
+        });
+      } else {
+        dispatch({
+          type: _types.DRAGON.FETCH_SUCCESS,
+          dragon: json.dragon
+        });
+      }
+    }).catch(function (error) {
+      return dispatch({
+        type: _types.DRAGON.FETCH_ERROR,
+        message: error.message
+      });
+    });
+  };
+};
+
+exports.fetchDragon = fetchDragon;
+},{"./types":"actions/types.js","../config":"config.js"}],"../node_modules/babel-runtime/node_modules/core-js/library/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -40516,6 +40571,7 @@ var DragonAvatar = /*#__PURE__*/function (_Component) {
           generationId = _this$props$dragon.generationId,
           dragonId = _this$props$dragon.dragonId,
           traits = _this$props$dragon.traits;
+      if (!dragonId) return /*#__PURE__*/_react.default.createElement("div", null);
       return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("span", null, "G ", generationId, "."), /*#__PURE__*/_react.default.createElement("span", null, "I ", dragonId, ". "), traits.map(function (trait) {
         return trait.traitValue;
       }).join(', '));
@@ -40527,47 +40583,7 @@ var DragonAvatar = /*#__PURE__*/function (_Component) {
 
 var _default = DragonAvatar;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"actions/dragon.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.fetchDragon = void 0;
-
-var _types = require("./types");
-
-// Use double arrow to pass a callback
-var fetchDragon = function fetchDragon() {
-  return function (dispatch) {
-    dispatch({
-      type: _types.DRAGON.FETCH
-    });
-    return fetch('http://localhost:3000/dragon/new').then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      if (json.type === 'error') {
-        dispatch({
-          type: _types.DRAGON.FETCH_ERROR,
-          message: json.message
-        });
-      } else {
-        dispatch({
-          type: _types.DRAGON.FETCH_SUCCESS,
-          dragon: json.dragon
-        });
-      }
-    }).catch(function (error) {
-      return dispatch({
-        type: _types.DRAGON.FETCH_ERROR,
-        message: error.message
-      });
-    });
-  };
-};
-
-exports.fetchDragon = fetchDragon;
-},{"./types":"actions/types.js"}],"components/Dragon.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"components/Dragon.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40577,15 +40593,13 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactBootstrap = require("react-bootstrap");
-
-var _DragonAvatar = _interopRequireDefault(require("./DragonAvatar"));
-
 var _reactRedux = require("react-redux");
 
 var _dragon = require("../actions/dragon");
 
-var _fetchStates = _interopRequireDefault(require("../reducers/fetchStates"));
+var _reactBootstrap = require("react-bootstrap");
+
+var _DragonAvatar = _interopRequireDefault(require("./DragonAvatar"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40621,38 +40635,18 @@ var Dragon = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(Dragon);
 
   function Dragon() {
-    var _temp, _this;
-
     _classCallCheck(this, Dragon);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _possibleConstructorReturn(_this, (_temp = _this = _super.call.apply(_super, [this].concat(args)), _this.fetchNextDragon = function () {
-      _this.props.fetchDragon();
-    }, _temp));
+    return _super.apply(this, arguments);
   }
 
   _createClass(Dragon, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.fetchNextDragon();
-    }
-  }, {
     key: "render",
     value: function render() {
-      console.log('this.props dragon', this.props);
-      var dragon = this.props.dragon;
-
-      if (dragon.status === _fetchStates.default.error) {
-        return /*#__PURE__*/_react.default.createElement("div", null, dragon.message);
-      }
-
       return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
-        onClick: this.fetchNextDragon
+        onClick: this.props.fetchDragon
       }, "New Dragon"), /*#__PURE__*/_react.default.createElement(_DragonAvatar.default, {
-        dragon: dragon
+        dragon: this.props.dragon
       }));
     }
   }]);
@@ -40660,21 +40654,18 @@ var Dragon = /*#__PURE__*/function (_Component) {
   return Dragon;
 }(_react.Component);
 
-var mapStateToProps = function mapStateToProps(state) {
-  var dragon = state.dragon;
+var _default = (0, _reactRedux.connect)(function (_ref) {
+  var dragon = _ref.dragon;
   return {
     dragon: dragon
   };
-};
-
-var componentConnector = (0, _reactRedux.connect)(mapStateToProps, {
+}, // shorthand for return, use () instead of return keyword
+{
   fetchDragon: _dragon.fetchDragon
-});
-
-var _default = componentConnector(Dragon);
+})(Dragon);
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-bootstrap":"../node_modules/react-bootstrap/es/index.js","./DragonAvatar":"components/DragonAvatar.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/dragon":"actions/dragon.js","../reducers/fetchStates":"reducers/fetchStates.js"}],"reducers/generation.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","../actions/dragon":"actions/dragon.js","react-bootstrap":"../node_modules/react-bootstrap/es/index.js","./DragonAvatar":"components/DragonAvatar.js"}],"reducers/generation.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
