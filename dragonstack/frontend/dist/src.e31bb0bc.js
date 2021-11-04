@@ -40537,6 +40537,7 @@ exports.fetchDragon = void 0;
 
 var _types = require("./types");
 
+// Use double arrow to pass a callback
 var fetchDragon = function fetchDragon() {
   return function (dispatch) {
     dispatch({
@@ -40698,7 +40699,7 @@ var DEFAULT_GENERATION = {
   expiration: ''
 };
 
-var generationReducer = function generationReducer() {
+var generation = function generation() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_GENERATION;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
@@ -40724,7 +40725,7 @@ var generationReducer = function generationReducer() {
   }
 };
 
-var _default = generationReducer;
+var _default = generation;
 exports.default = _default;
 },{"../actions/types":"actions/types.js","./fetchStates":"reducers/fetchStates.js"}],"reducers/dragon.js":[function(require,module,exports) {
 "use strict";
@@ -40754,7 +40755,7 @@ var DEFAULT_DRAGON = {
   traits: []
 };
 
-var dragonReducer = function dragonReducer() {
+var dragon = function dragon() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_DRAGON;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
@@ -40773,14 +40774,14 @@ var dragonReducer = function dragonReducer() {
     case _types.DRAGON.FETCH_SUCCESS:
       return _objectSpread(_objectSpread({}, state), {}, {
         status: _fetchStates.default.success
-      }, action.generation);
+      }, action.dragon);
 
     default:
       return state;
   }
 };
 
-var _default = dragonReducer;
+var _default = dragon;
 exports.default = _default;
 },{"../actions/types":"actions/types.js","./fetchStates":"reducers/fetchStates.js"}],"reducers/index.js":[function(require,module,exports) {
 "use strict";

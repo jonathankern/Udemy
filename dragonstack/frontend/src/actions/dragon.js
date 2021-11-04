@@ -1,5 +1,6 @@
 import { DRAGON } from './types';
 
+// Use double arrow to pass a callback
 export const fetchDragon = () => dispatch => {
     dispatch({ type: DRAGON.FETCH });
 
