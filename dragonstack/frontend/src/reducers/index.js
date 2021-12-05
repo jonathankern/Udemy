@@ -1,5 +1,7 @@
+import { combineReducers } from 'redux'; // function that takes multiple reducers and joins them into 1 reducer function
 import generation from './generation';
 import dragon from './dragon';
-import { combineReducers } from 'redux'; // function that takes multiple reducers and joins them into 1 reducer function
+import account from './account';
 
-export default combineReducers({ generation, dragon });
+
+export default combineReducers({ account, dragon, generation });

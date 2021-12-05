@@ -21658,7 +21658,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DRAGON = exports.GENERATION = void 0;
+exports.ACCOUNT = exports.DRAGON = exports.GENERATION = void 0;
 var GENERATION = {
   FETCH: 'GENERATION_FETCH',
   FETCH_ERROR: 'GENERATION_FETCH_ERROR',
@@ -21671,6 +21671,12 @@ var DRAGON = {
   FETCH_SUCCESS: 'DRAGON_FETCH_SUCCESS'
 };
 exports.DRAGON = DRAGON;
+var ACCOUNT = {
+  FETCH: 'ACCOUNT_FETCH',
+  FETCH_ERROR: 'ACCOUNT_FETCH_ERROR',
+  FETCH_SUCCESS: 'ACCOUNT_FETCH_SUCCESS'
+};
+exports.ACCOUNT = ACCOUNT;
 },{}],"reducers/fetchStates.js":[function(require,module,exports) {
 "use strict";
 
@@ -21793,6 +21799,60 @@ var dragon = function dragon() {
 
 var _default = dragon;
 exports.default = _default;
+},{"../actions/types":"actions/types.js","./fetchStates":"reducers/fetchStates.js"}],"reducers/account.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _types = require("../actions/types");
+
+var _fetchStates = _interopRequireDefault(require("./fetchStates"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var DEFAULT_ACCOUNT = {
+  loggedIn: false
+};
+
+var account = function account() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_ACCOUNT;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _types.ACCOUNT.FETCH:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        status: _fetchStates.default.fetching
+      });
+
+    case _types.ACCOUNT.FETCH_ERROR:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        status: _fetchStates.default.error,
+        message: action.message
+      });
+
+    case _types.ACCOUNT.FETCH_SUCCESS:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        status: _fetchStates.default.success,
+        message: action.message,
+        loggedIn: true
+      });
+
+    default:
+      return state;
+  }
+};
+
+var _default = account;
+exports.default = _default;
 },{"../actions/types":"actions/types.js","./fetchStates":"reducers/fetchStates.js"}],"reducers/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -21801,22 +21861,25 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _redux = require("redux");
+
 var _generation = _interopRequireDefault(require("./generation"));
 
 var _dragon = _interopRequireDefault(require("./dragon"));
 
-var _redux = require("redux");
+var _account = _interopRequireDefault(require("./account"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // function that takes multiple reducers and joins them into 1 reducer function
 var _default = (0, _redux.combineReducers)({
-  generation: _generation.default,
-  dragon: _dragon.default
+  account: _account.default,
+  dragon: _dragon.default,
+  generation: _generation.default
 });
 
 exports.default = _default;
-},{"./generation":"reducers/generation.js","./dragon":"reducers/dragon.js","redux":"../node_modules/redux/es/redux.js"}],"config.js":[function(require,module,exports) {
+},{"redux":"../node_modules/redux/es/redux.js","./generation":"reducers/generation.js","./dragon":"reducers/dragon.js","./account":"reducers/account.js"}],"config.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
