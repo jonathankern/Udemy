@@ -41131,7 +41131,6 @@ var AuthForm = /*#__PURE__*/function (_Component) {
         password: password
       });
     }, _this.login = function () {
-      console.log('this.state', _this.state);
       var _this$state2 = _this.state,
           username = _this$state2.username,
           password = _this$state2.password;
