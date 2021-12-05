@@ -16,3 +16,9 @@ Button {
     padding: .5rem 1rem;
     cursor: pointer;
 }
+
+.logout-button {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}

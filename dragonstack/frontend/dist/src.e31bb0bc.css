@@ -17,4 +17,10 @@ Button {
     cursor: pointer;
 }
 
+.logout-button {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
