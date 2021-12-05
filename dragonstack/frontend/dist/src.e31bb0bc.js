@@ -40925,7 +40925,66 @@ var Home = /*#__PURE__*/function (_Component) {
 
 var _default = Home;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Generation":"components/Generation.js","./Dragon":"components/Dragon.js"}],"components/AuthForm.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Generation":"components/Generation.js","./Dragon":"components/Dragon.js"}],"actions/account.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.signup = void 0;
+
+var _types = require("./types");
+
+var _config = require("../config");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var signup = function signup(_ref) {
+  var username = _ref.username,
+      password = _ref.password;
+  return function (dispatch) {
+    dispatch({
+      type: _types.ACCOUNT.FETCH
+    });
+    return fetch("".concat(_config.BACKEND.ADDRESS, "/account/signup"), {
+      method: 'POST',
+      body: JSON.stringify({
+        username: username,
+        password: password
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include' // allows sign up function to store session cookie string on browser
+
+    }).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      if (json.type === 'error') {
+        dispatch({
+          type: _types.ACCOUNT.FETCH_ERROR,
+          message: json.message
+        });
+      } else {
+        dispatch(_objectSpread({
+          type: _types.ACCOUNT.FETCH_SUCCESS
+        }, json));
+      }
+    }).catch(function (error) {
+      return dispatch({
+        type: _types.ACCOUNT.FETCH_ERROR,
+        message: error.message
+      });
+    });
+  };
+};
+
+exports.signup = signup;
+},{"./types":"actions/types.js","../config":"config.js"}],"components/AuthForm.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40935,7 +40994,11 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRedux = require("react-redux");
+
 var _reactBootstrap = require("react-bootstrap");
+
+var _account = require("../actions/account");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -40989,7 +41052,14 @@ var AuthForm = /*#__PURE__*/function (_Component) {
         password: event.target.value
       });
     }, _this.signup = function () {
-      console.log('this.state', _this.state);
+      var _this$state = _this.state,
+          username = _this$state.username,
+          password = _this$state.password;
+
+      _this.props.signup({
+        username: username,
+        password: password
+      });
     }, _this.login = function () {
       console.log('this.state', _this.state);
     }, _temp));
@@ -41019,9 +41089,12 @@ var AuthForm = /*#__PURE__*/function (_Component) {
   return AuthForm;
 }(_react.Component);
 
-var _default = AuthForm;
+var _default = (0, _reactRedux.connect)(null, {
+  signup: _account.signup
+})(AuthForm);
+
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-bootstrap":"../node_modules/react-bootstrap/es/index.js"}],"components/Root.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-redux":"../node_modules/react-redux/es/index.js","react-bootstrap":"../node_modules/react-bootstrap/es/index.js","../actions/account":"actions/account.js"}],"components/Root.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

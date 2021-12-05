@@ -12,7 +12,7 @@ const engine = new GenerationEngine();
 
 app.locals.engine = engine;
 
-app.use(cors({ origin: 'http://localhost:1234' })); // set backend to have the same origin as frontend
+app.use(cors({ origin: 'http://localhost:1234', credentials: true })); // set backend to have the same origin as frontend
 app.use(bodyParser.json());
 app.use(cookieParser());
 
