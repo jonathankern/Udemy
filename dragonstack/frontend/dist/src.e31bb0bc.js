@@ -40874,7 +40874,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.signup = void 0;
+exports.logout = exports.signup = exports.login = void 0;
 
 var _types = require("./types");
 
@@ -40916,9 +40916,32 @@ var fetchFromAccount = function fetchFromAccount(_ref) {
   };
 };
 
-var signup = function signup(_ref2) {
+var login = function login(_ref2) {
   var username = _ref2.username,
       password = _ref2.password;
+  return fetchFromAccount({
+    endpoint: 'login',
+    options: {
+      method: 'POST',
+      body: JSON.stringify({
+        username: username,
+        password: password
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include' // allows sign up function to store session cookie string on browser
+
+    },
+    SUCCESS_TYPE: _types.ACCOUNT.FETCH_SUCCESS
+  });
+};
+
+exports.login = login;
+
+var signup = function signup(_ref3) {
+  var username = _ref3.username,
+      password = _ref3.password;
   return fetchFromAccount({
     endpoint: 'signup',
     options: {
@@ -41109,6 +41132,14 @@ var AuthForm = /*#__PURE__*/function (_Component) {
       });
     }, _this.login = function () {
       console.log('this.state', _this.state);
+      var _this$state2 = _this.state,
+          username = _this$state2.username,
+          password = _this$state2.password;
+
+      _this.props.login({
+        username: username,
+        password: password
+      });
     }, _temp));
   }
 
@@ -41149,6 +41180,7 @@ var _default = (0, _reactRedux.connect)(function (_ref) {
     account: account
   };
 }, {
+  login: _account.login,
   signup: _account.signup
 })(AuthForm);
 

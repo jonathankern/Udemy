@@ -20,6 +20,17 @@ const fetchFromAccount = ({ endpoint, options, SUCCESS_TYPE }) => dispatch => {
     );
 }
 
+export const login = ({ username, password }) => fetchFromAccount ({
+    endpoint: 'login',
+    options: {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include' // allows sign up function to store session cookie string on browser
+    },
+    SUCCESS_TYPE: ACCOUNT.FETCH_SUCCESS
+});
+
 export const signup = ({ username, password }) => fetchFromAccount ({
     endpoint: 'signup',
     options: {
