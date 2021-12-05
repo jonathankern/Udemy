@@ -40917,6 +40917,18 @@ var AuthForm = /*#__PURE__*/function (_Component) {
     return _possibleConstructorReturn(_this, (_temp = _this = _super.call.apply(_super, [this].concat(args)), _this.state = {
       username: '',
       password: ''
+    }, _this.updateUsername = function (event) {
+      _this.setState({
+        username: event.target.value
+      });
+    }, _this.updatePassword = function (event) {
+      _this.setState({
+        password: event.target.value
+      });
+    }, _this.signup = function () {
+      console.log('this.state', _this.state);
+    }, _this.login = function () {
+      console.log('this.state', _this.state);
     }, _temp));
   }
 
@@ -40926,12 +40938,18 @@ var AuthForm = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Dragon Stack"), /*#__PURE__*/_react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.FormControl, {
         type: "text",
         value: this.state.username,
-        placeholder: "username"
+        placeholder: "username",
+        onChange: this.updateUsername
       })), /*#__PURE__*/_react.default.createElement(_reactBootstrap.FormGroup, null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.FormControl, {
         type: "password",
         value: this.state.password,
-        placeholder: "password"
-      })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, null, "Log In"), /*#__PURE__*/_react.default.createElement("span", null, " or "), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, null, "Sign Up")));
+        placeholder: "password",
+        onChange: this.updatePassword
+      })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
+        onClick: this.login
+      }, "Log In"), /*#__PURE__*/_react.default.createElement("span", null, " or "), /*#__PURE__*/_react.default.createElement(_reactBootstrap.Button, {
+        onClick: this.signup
+      }, "Sign Up")));
     }
   }]);
 
