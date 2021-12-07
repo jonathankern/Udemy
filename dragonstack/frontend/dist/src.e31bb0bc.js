@@ -21675,7 +21675,8 @@ var ACCOUNT = {
   FETCH: 'ACCOUNT_FETCH',
   FETCH_ERROR: 'ACCOUNT_FETCH_ERROR',
   FETCH_SUCCESS: 'ACCOUNT_FETCH_SUCCESS',
-  FETCH_LOGOUT_SUCCESS: 'ACCOUNT_FETCH_LOGOUT_SUCCESS'
+  FETCH_LOGOUT_SUCCESS: 'ACCOUNT_FETCH_LOGOUT_SUCCESS',
+  FETCH_AUTHENTICATED_SUCCESS: 'ACCOUNT_FETCH_AUTHENTICATED_SUCCESS'
 };
 exports.ACCOUNT = ACCOUNT;
 },{}],"reducers/fetchStates.js":[function(require,module,exports) {
@@ -21852,6 +21853,13 @@ var account = function account() {
         status: _fetchStates.default.success,
         message: action.message,
         loggedIn: false
+      });
+
+    case _types.ACCOUNT.FETCH_AUTHENTICATED_SUCCESS:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        status: _fetchStates.default.success,
+        message: action.message,
+        loggedIn: action.authenticated
       });
 
     default:
@@ -40874,7 +40882,7 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.signup = exports.login = void 0;
+exports.fetchAuthenticated = exports.logout = exports.signup = exports.login = void 0;
 
 var _types = require("./types");
 
@@ -40973,6 +40981,18 @@ var logout = function logout() {
 };
 
 exports.logout = logout;
+
+var fetchAuthenticated = function fetchAuthenticated() {
+  return fetchFromAccount({
+    endpoint: 'authenticated',
+    options: {
+      credentials: 'include'
+    },
+    SUCCESS_TYPE: _types.ACCOUNT.FETCH_AUTHENTICATED_SUCCESS
+  });
+};
+
+exports.fetchAuthenticated = fetchAuthenticated;
 },{"./types":"actions/types.js","../config":"config.js"}],"components/Home.js":[function(require,module,exports) {
 "use strict";
 
@@ -41346,15 +41366,20 @@ var _reducers = _interopRequireDefault(require("./reducers"));
 
 var _Root = _interopRequireDefault(require("./components/Root"));
 
+var _account = require("./actions/account");
+
 require("./index.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_reducers.default, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), (0, _redux.applyMiddleware)(_reduxThunk.default));
-(0, _reactDom.render)( /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
-  store: store
-}, /*#__PURE__*/_react.default.createElement(_Root.default, null)), document.getElementById('root'));
-},{"react":"../node_modules/react/index.js","redux":"../node_modules/redux/es/redux.js","react-redux":"../node_modules/react-redux/es/index.js","react-dom":"../node_modules/react-dom/index.js","redux-thunk":"../node_modules/redux-thunk/es/index.js","./reducers":"reducers/index.js","./components/Root":"components/Root.js","./index.css":"index.css"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var store = (0, _redux.createStore)(_reducers.default, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), (0, _redux.applyMiddleware)(_reduxThunk.default)); // Don't render app until fetch authenticated request has completed 
+
+store.dispatch((0, _account.fetchAuthenticated)()).then(function () {
+  (0, _reactDom.render)( /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
+    store: store
+  }, /*#__PURE__*/_react.default.createElement(_Root.default, null)), document.getElementById('root'));
+});
+},{"react":"../node_modules/react/index.js","redux":"../node_modules/redux/es/redux.js","react-redux":"../node_modules/react-redux/es/index.js","react-dom":"../node_modules/react-dom/index.js","redux-thunk":"../node_modules/redux-thunk/es/index.js","./reducers":"reducers/index.js","./components/Root":"components/Root.js","./actions/account":"actions/account.js","./index.css":"index.css"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

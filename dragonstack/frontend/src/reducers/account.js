@@ -34,6 +34,14 @@ const account = (state = DEFAULT_ACCOUNT, action) => {
                 loggedIn: false
             }
 
+        case ACCOUNT.FETCH_AUTHENTICATED_SUCCESS:
+            return {
+                ...state,
+                status: fetchStates.success,
+                message: action.message,
+                loggedIn: action.authenticated
+            }
+
         default:
             return state;
     }
