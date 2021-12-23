@@ -1,22 +1,29 @@
 const { Router } = require('express'); // not root export so we need to require it within the {}
 const DragonTable = require('../dragon/table');
+const AccountDragonTable = require('../accountDragon/table');
+const { authenticatedAccount } = require('./helper');
 
 const router = new Router();
 
 // GET method web request (endpoint, callback(request, response));
 router.get('/new', (req, res, next) => {
-    const dragon = req.app.locals.engine.generation.newDragon();
+    let accountId, dragon;
 
-    DragonTable.storeDragon(dragon)
-        .then(({ dragonId }) => {
-            console.log('dragonId', dragonId);
+    authenticatedAccount({ sessionString: req.cookies.sessionString })
+    .then(({ account }) => {
+        accountId = account.id;
 
-            dragon.dragonId = dragonId;
+        dragon = req.app.locals.engine.generation.newDragon();
 
-            // respond back to the user with some json. configure object with dragon key and define value to get current generation
-            res.json({ dragon });
-        })
-        .catch(error => next(error));
+        return DragonTable.storeDragon(dragon);
+    })
+    .then(({ dragonId }) => {
+        dragon.dragonId = dragonId;
+
+        return AccountDragonTable.storeAccountDragon({ accountId, dragonId });
+    })
+    .then(() => res.json({ dragon }))
+    .catch(error => next(error));
 });
 
 module.exports = router;
