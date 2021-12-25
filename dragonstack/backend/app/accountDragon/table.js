@@ -24,7 +24,7 @@ class AccountDragonTable {
                 [accountId],
                 (error, response) => {
                     if (error) return reject(error);
-
+                    
                     resolve({ accountDragons: response.rows });
                 }
             )
