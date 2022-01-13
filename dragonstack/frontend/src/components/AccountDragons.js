@@ -19,7 +19,7 @@ class AccountDragons extends Component {
                                 <AccountDragonRow dragon={dragon} />
                                 <hr />
                             </div>
-                        )
+                        );
                     })
                 }
             </div>
