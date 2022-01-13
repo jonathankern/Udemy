@@ -12,11 +12,11 @@ class AccountDragons extends Component {
             <div>
                 <h3>Account Dragons</h3>
             </div>
-        )
+        );
     }
 }
 
 export default connect(
-    ({ AccountDragons }) => ({ AccountDragons }),
+    ({ accountDragons }) => ({ accountDragons }),
     { fetchAccountDragons }
 )(AccountDragons);
